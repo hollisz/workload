@@ -27,11 +27,13 @@ export default {
         { ID: 8, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: "DTO", Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 1, Borrowed: "false" },
         { ID: 9, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: "DTO", Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 5, BilledHours: 1, Borrowed: "false" },
         { ID: 10, Name: "Albert Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: "DTO", Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 6, BilledHours: 1, Borrowed: "true" },
-        { ID: 11, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: "DTO", Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 1, BilledHours: 1, Borrowed: "false" }
+        { ID: 11, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: "DTO", Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 1, BilledHours: 1, Borrowed: "false" },
+        { ID: 12, Name: "Zack Hollis", FileNumber: "MO-22-IGT-17-18", Task: "SAS", Type: "Scheduled", Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 0, Borrowed: "true" }
       ],
       Resources: [
         { ID: 1, Name: "Jeremy Huddleston", Borrowed: "false" },
-        { ID: 2, Name: "Albert Huddleston", Borrowed: "true" }
+        { ID: 2, Name: "Albert Huddleston", Borrowed: "true" },
+        { ID: 3, Name: "Zack Hollis", Borrowed: "true" }
       ],
       VisiblePeople:[],
       nonBorrowedPeople:Array,
@@ -52,7 +54,15 @@ export default {
         {
           if(this.People[j].ID == tasks[i])
           {
+            //Set the name to the new resource
             this.People[j].Name = name;
+            //Set the billed hours to 0
+            this.People[j].BilledHours = 0;
+            //Set the status to pending
+            this.People[j].Status = "Pending";
+            //Set borrowed to the resources borrow
+            this.People[j].Borrowed = this.Resources.find(x => x.Name == name).Borrowed;
+
           }
         }
       }
