@@ -35,6 +35,7 @@ export default {
         { ID: 2, Name: "Albert Huddleston", Borrowed: "true" },
         { ID: 3, Name: "Zack Hollis", Borrowed: "true" }
       ],
+      TaskRank: {FREE: 1, OH: 2, SCHEDULED: 3, LENTEXTERNAL: 4, LENTINTERNAL: 5, SUPPORTTRAINING: 6, NONBILLABLE: 7, DTO: 8, HOLIDAY: 9, BILLED: 10 },
       VisiblePeople:[],
       nonBorrowedPeople:Array,
       borrowedPeople:Array,
@@ -157,6 +158,22 @@ export default {
       var name = array[0].Name;
       len = array.length-1;
       
+      // var filteredResources = Resources.filter(y => y.Borrowed == borrowed); 
+      
+      // var peeps = [];
+
+      // for(var p=0; p<filteredResources.length; p++)
+      // {
+      //     array = this.People.filter(y => y.Name == Resources[i]);
+
+      //     type = this.checkType(type, array[i].Type);
+      //     scheduled = scheduled + array[i].ScheduledHours;
+      //     billed = billed + array[i].BilledHours;
+      //     hours = billed + scheduled;
+                  
+          
+      // }
+
       console.log(array);
 
         while (i < len) {
