@@ -1,0 +1,164 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- build:js scripts/vendor/modernizr.js -->
+  <script src="bower_components/modernizr/modernizr.js"></script>
+
+  <!-- endbuild -->
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href=".\styles\main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+    <div class="b">
+      <div class="container">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-3">
+                <h4>Jeremy Huddleston</h4>
+              </div>
+              <div class="col-md-5">
+                <h5>Total Hours: 20.75 Minus OH: 18</h5>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-fit">
+                <thead>
+                  <tr bgcolor="#bgbgbg">
+                    <th></th>
+                    <th>Filenumber</th>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Est. Start Date</th>
+                    <th>Est. Test Complete</th>
+                    <th>Est. Hours</th>
+                    <th>Act. Hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input id="checkBox" type="checkbox"></td>
+                    <td>MO-22-IGT-16-16</td>
+                    <td>SAS</td>
+                    <td>IT</td>
+                    <td>01/02/17</td>
+                    <td>01/03/17</td>
+                    <td>8.00</td>
+                    <td>4.00</td>
+                  </tr>
+                  <tr>
+                    <td><input id="checkBox" type="checkbox"></td>
+                    <td>MO-22-IGT-16-17</td>
+                    <td>Emulation</td>
+                    <td>PN</td>
+                    <td>01/03/17</td>
+                    <td>01/06/17</td>
+                    <td>16.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr class="greenrowborder">
+                    <td><input id="checkBox" type="checkbox"></td>
+                    <td>Internal</td>
+                    <td>DTO</td>
+                    <td>AP</td>
+                    <td>01/09/17</td>
+                    <td>01/13/17</td>
+                    <td>16.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr class="redrowborder">
+                    <td><input id="checkBox" type="checkbox"></td>
+                    <td>MO-22-IGT-16-16</td>
+                    <td>Regulatory</td>
+                    <td>PN</td>
+                    <td>01/02/17</td>
+                    <td>01/03/17</td>
+                    <td>8.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr class="redrowborder">
+                    <td><input id="checkBox" type="checkbox"></td>
+                    <td>MO-22-IGT-16-16</td>
+                    <td>Power Hit</td>
+                    <td>PN</td>
+                    <td>01/02/17</td>
+                    <td>01/03/17</td>
+                    <td>8.00</td>
+                    <td>4.00</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-center">
+                <button type="button" class="btn btn-primary">Re-Assign</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href=".\projects.html">Projects</a>
+    <a href=".\engtracking.html">EngTracking</a>
+    <a href=".\gant.html">GANT</a>
+
+
+
+    <button id="hidesave" type="button" class="btn btn-primary">HideSave</button>
+
+
+    <script>
+        $("#hidesave").click(function() {
+            $("#save").hide();
+            $("#cancel").hide();
+            console.log("Save hide");
+        });
+    </script>
+
+
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <!-- build:js scripts/main.js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/hello.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vendor/bootstrap.js -->
+    <script src="bower_components/bootstrap/js/affix.js"></script>
+    <script src="bower_components/bootstrap/js/alert.js"></script>
+    <script src="bower_components/bootstrap/js/dropdown.js"></script>
+    <script src="bower_components/bootstrap/js/tooltip.js"></script>
+    <script src="bower_components/bootstrap/js/modal.js"></script>
+    <script src="bower_components/bootstrap/js/transition.js"></script>
+    <script src="bower_components/bootstrap/js/button.js"></script>
+    <script src="bower_components/bootstrap/js/popover.js"></script>
+    <script src="bower_components/bootstrap/js/carousel.js"></script>
+    <script src="bower_components/bootstrap/js/scrollspy.js"></script>
+    <script src="bower_components/bootstrap/js/collapse.js"></script>
+    <script src="bower_components/bootstrap/js/tab.js"></script>
+    <!-- endbuild -->
+  </body>
+
+</html>
