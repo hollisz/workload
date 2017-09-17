@@ -155,15 +155,18 @@ export default {
 
       var array = this.sortPeople().filter(function(x) {return (x.Borrowed == borrowed)})
       var name = array[0].Name;
-      len = array.length - 1;
+      len = array.length-1;
+      
+      console.log(array);
 
         while (i < len) {
             name = array[i].Name;
             type = array[i].Type;
             IDs[person] = { Name: array[i].Name, Days: [] };
-
+          console.log("PreCycle names:" + name);
         //Cycle through each person
         while ((array[i].Name == name) && (i < len)) {
+          console.log("Cycle names:" + name);
           type = this.checkType(type, array[i].Type);
           scheduled = scheduled + array[i].ScheduledHours;
           billed = billed + array[i].BilledHours;
