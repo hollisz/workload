@@ -1,6 +1,6 @@
 <template>
   <div class="parent">
-    <child v-bind:message="message2" v-bind:people="People" v-bind:borrowedPeople="borrowedPeople" v-bind:nonBorrowedPeople="nonBorrowedPeople" v-on:employeeClicked="employeeClick"></child>
+    <child v-bind:message="message2" v-bind:Dates="Dates" v-bind:Daya="Days" v-bind:people="People" v-bind:borrowedPeople="borrowedPeople" v-bind:nonBorrowedPeople="nonBorrowedPeople" v-on:employeeClicked="employeeClick"></child>
     <employee v-bind:Tasks=VisiblePeople v-bind:Name=activePerson v-bind:Resources=resources v-on:reassign="reassign"></employee>
   </div>
 </template>
@@ -18,8 +18,8 @@ export default {
   },
   data() {
     return {
-      Tasks: [{ ID: 1, Name: "Zack Hollis", Billed: [{ Day: "7/21/2017", Amount: 4 }, { Day: "7/22/2017", Amount: 4 }] },
-      { ID: 2, Name: "Zack Hollis", Billed: [{ Day: "10/2/2017", Amount: 6 }, { Day: "7/2/2017", Amount: 6 }] }
+      Tasks: [{ ID: 1, Name: "Zack Hollis", Billed: [{ Day: "8/21/2017", Amount: 4 }, { Day: "7/22/2017", Amount: 4 }] },
+      { ID: 2, Name: "Zack Hollis", Billed: [{ Day: "8/2/2017", Amount: 6 }, { Day: "7/2/2017", Amount: 6 }] }
       ],
       People: [
         { ID: 1, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "Approved", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 0, BilledHours: 9, Borrowed: "false" },
@@ -41,19 +41,41 @@ export default {
         { ID: 2, Name: "Zack Hollis", Borrowed: "true" }
       ],
       TaskRank: { FREE: 1, OH: 2, SCHEDULED: 3, LENTEXTERNAL: 4, LENTINTERNAL: 5, SUPPORTTRAINING: 6, NONBILLABLE: 7, DTO: 8, HOLIDAY: 9, BILLED: 10 },
+      Dates: [],
+      Days:  [],
       VisiblePeople: [],
       nonBorrowedPeople: Array,
       borrowedPeople: Array,
-      resources: Array
+      resources: Array,
+      taskStart: String,
+      taskEnd: String
     }
   },
   created: function() {
     this.calculateStartDate();
+        this.populateCalender();
     this.nonBorrowedPeople = this.getHours("false");
     this.borrowedPeople = this.getHours("true");
     this.resources = this.getResources();
   },
   methods: {
+    "populateCalender": function populateCalender() {
+      
+      var days = moment.duration(this.taskEnd.diff(this.taskStart)).asDays();
+      var start = moment(this.taskStart);
+
+      for(var i=0; i<days; i++)
+      {
+
+        start.add(i, 'days');
+        this.Dates.push(start.format('D'));
+        this.Days.push(start.format('dddd').substring(0,1));
+        console.log(start.format('D'));
+        console.log(start.format('dddd').substring(0,1));
+
+      }
+
+    },
     "calculateStartDate": function calculateStartDate() {
 
       var startDate = moment().format('l');
@@ -79,6 +101,8 @@ export default {
         }
       }
       console.log(startDate, endDate.format('l'));
+      this.taskStart = startDate;
+      this.taskEnd = endDate;
 
     },
     "reassign": function reassign(tasks, name) {

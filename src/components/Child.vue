@@ -104,12 +104,13 @@ export default {
     message: String,
     people: Array,
     borrowedPeople: Array,
-    nonBorrowedPeople: Array
+    nonBorrowedPeople: Array,
+    Dates:Array,
+    Days:Array
+
   },
   data() {
     return {
-      Dates: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15"],
-      Days:  ["S", "S", "M", "T", "W", "T", "F", "S", "S", "M",  "T",  "W",  "T",  "F" , "S",  "M",  "T",  "W",  "T",  "F",  "S",  "S",  "M",  "T",  "W",  "T",  "F", "T",  "F" ],
       blueActive: true,
       dtoActive: true,
       classObject: {
