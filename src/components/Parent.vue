@@ -18,12 +18,12 @@ export default {
   },
   data() {
     return {
-      Tasks: [{ ID: 1, Name: "Zack Hollis", Billed: [{ Day: "8/21/2017", Amount: 4 }, { Day: "7/22/2017", Amount: 4 }] },
+      Tasks: [{ ID: 1, Name: "Jeremy Huddleston", Billed: [{ Day: "8/21/2017", Amount: 4 }, { Day: "7/22/2017", Amount: 4 }] },
       { ID: 2, Name: "Zack Hollis", Billed: [{ Day: "8/2/2017", Amount: 6 }, { Day: "7/2/2017", Amount: 6 }] }
       ],
       People: [
-        { ID: 1, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "Approved", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 0, BilledHours: 9, Borrowed: "false" },
-        { ID: 2, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "In Progress", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 0, BilledHours: 8, Borrowed: "false" },
+        { ID: 1, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "Approved", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 0, Borrowed: "false" },
+        { ID: 2, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "In Progress", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 0, Borrowed: "false" },
         // { ID: 3, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 3, BilledHours: 1, Borrowed: "false" },
         // { ID: 4, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 1, Borrowed: "false" },
         // { ID: 5, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 5, BilledHours: 1, Borrowed: "false" },
@@ -54,15 +54,13 @@ export default {
   created: function() {
     this.calculateStartDate();
     this.populateCalender();
-    this.populateBilled("Zack Hollis");
     this.nonBorrowedPeople = this.getHours("false");
     this.borrowedPeople = this.getHours("true");
     this.resources = this.getResources();
   },
   methods: {
     "populateCalender": function populateCalender() {
-
-      var days = moment.duration(this.taskEnd.diff(this.taskStart)).asDays();
+      var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
       var start = moment(this.taskStart);
 
       this.Dates.push(start.format('D'));
@@ -93,12 +91,20 @@ export default {
 
       for (var t = 0; t < this.Tasks.length; t++) {
         this.Tasks[t].Billed.sort((a, b) => a.Day > b.Day ? -1 : a.Day < b.Day);
+        //console.log("billed:" + this.Tasks[t].Billed[0].Day + "end:" + endDate.format('l'));
+        //var isafter = moment(endDate).isAfter(this.Tasks[t].Billed[0].Day);
+        var isbefore = moment(endDate).isBefore(this.Tasks[t].Billed[0].Day);
 
-        if (this.Tasks[t].Billed[0].Day > endDate) {
+        //console.log(isafter);
+        console.log(isbefore);
+
+        //if (this.Tasks[t].Billed[0].Day > endDate) {
+        if (isbefore) {
           endDate = this.Tasks[t].Billed[0].Day;
+          //console.log("new enddate:" + endDate);
         }
       }
-      console.log(startDate, endDate.format('l'));
+      //console.log(startDate, endDate.format('l'));
       this.taskStart = startDate;
       this.taskEnd = endDate;
 
@@ -198,6 +204,12 @@ export default {
     },
     "populateBilled": function populateBilled(name) {
       var hours = new Array;
+      var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
+
+      for (var y = 0; y <= days; y++) {
+        //console.log(y);
+        hours.push({ Hours: 0, Class: "Free" });
+      }
 
       var billedTasks = this.Tasks.filter(x => x.Name == name);
 
@@ -205,7 +217,11 @@ export default {
         for (var j = 0; j < billedTasks[i].Billed.length; j++) {
           var billDate = moment(billedTasks[i].Billed[j].Day);
           var slot = moment.duration(billDate.diff(this.taskStart)).asDays();
-          hours[slot] += billedTasks[i].Billed[j].Amount;
+          //console.log("slot:" + slot + "Billed:" + billDate.format('l'));
+          hours[slot].Hours = (hours[slot].Hours + billedTasks[i].Billed[j].Amount);
+          hours[slot].Class = "Billed";
+          //hours[slot] = { Hours: (hours[slot].Hours+billedTasks[i].Billed[j].Amount), Class: 1 };
+          //hours[slot] += billedTasks[i].Billed[j].Amount;
 
         }
       }
@@ -222,17 +238,19 @@ export default {
       // var person = 0;
       // var type;
 
-      var array = this.sortPeople().filter(function(x) { return (x.Borrowed == borrowed) })
+      var array = this.sortPeople().filter(function(x) { return (x.Borrowed == borrowed) });
       var name = array[0].Name;
       len = array.length - 1;
 
-
       var filteredResources = this.Resources.filter(y => y.Borrowed == borrowed);
 
+      //console.log( filteredResources.length);
       var peeps = [];
 
-
       for (var p = 0; p < filteredResources.length; p++) {
+        IDs[p] = { Name: filteredResources[p].Name, Days: [] };
+        IDs[p].Days = this.populateBilled(filteredResources[p].Name);
+
         peeps = this.People.filter(y => y.Name == filteredResources[p].Name).sort((a, b) => a.Type < b.Type ? -1 : a.Type > b.Type);
 
         //console.log("Hours for:" + filteredResources[p].Name + "\n");
@@ -241,48 +259,60 @@ export default {
         var dayNum = 0;
         var tempHours = -1;
         var hoursLeft = 0;
+        var hoursLeftInDay = 0;
         var hoursInDay = 8;
 
-        for (var t = 0; t < peeps.length; t++) {
-          IDs[peeps.Name] = { Name: peeps.Name, Days: this.populateBilled(peeps.Name) };
-          //console.log("Current:" + hoursCurrentDay + " Billed:" + peeps[t].BilledHours + " Schduled:" + peeps[t].ScheduledHours)
-          hoursLeft = peeps[t].BilledHours;
-          while (hoursLeft != 0) {
-            tempHours = hoursInDay - hoursLeft;
-            //console.log("Temphours:" + tempHours + " Hours Left:" + hoursLeft + "\n");
+        //console.log("peep len:" + peeps.length);
 
-            if (tempHours == 0) {
-              dayNum++;
-              hoursCurrentDay = 0;
-              hoursLeft = 0;
-            }
-            else if (tempHours < 0) {
-              hoursCurrentDay += tempHours * -1;
-              hoursLeft = 0;
-              dayNum++;
-            }
-            else {
-              dayNum++;
-              hoursCurrentDay = tempHours;
-              hoursLeft = tempHours;
+        for (var d = 0; d < IDs[p].Days.length; d++) {
+          console.log(IDs[p].Days[d].Hours);
+
+          if (IDs[p].Days[d].Hours < hoursInDay) {
+            hoursLeftInDay = hoursInDay - IDs[p].Days[d].Hours; 
+            for (var t = 0; t < peeps.length; t++) {
+              console.log(peeps[t].Name + " " + peeps[t].Task + " " + peeps[t].ScheduledHours);
+              hoursLeft = hoursLeftInDay - peeps[t].Scheduled - peeps[t].Billed;
+
+               while (hoursLeft != 0) {
+                 tempHours = hoursInDay - hoursLeft;
+
+                 if (tempHours == 0) {
+                   IDs[p].Days[d].Hours += hoursLeft;
+                   dayNum++;
+                   hoursCurrentDay = 0;
+                   hoursLeft = 0;
+                 }
+                else if (tempHours < 0) {
+                  hoursCurrentDay += tempHours * -1;
+                  hoursLeft = 0;
+                  dayNum++;
+                }
+                else {
+                  dayNum++;
+                  hoursCurrentDay = tempHours;
+                  hoursLeft = tempHours;
+                }
+               }
             }
           }
-
-          // while (tempHours != 0) {
-          //   tempHours = this.fitInDay(peeps[t].ScheduledHours, hoursCurrentDay);
-
-          //   if (tempHours == 0) {
-          //     hoursCurrentDay += peeps[t].ScheduledHours;
-          //   }
-          //   else {
-          //     dayNum++;
-          //     hoursCurrentDay = tempHours;
-          //   }
-          // }
-
-          console.log("Days:" + dayNum + "\n");
         }
+        //=================================
+
+        // while (tempHours != 0) {
+        //   tempHours = this.fitInDay(peeps[t].ScheduledHours, hoursCurrentDay);
+
+        //   if (tempHours == 0) {
+        //     hoursCurrentDay += peeps[t].ScheduledHours;
+        //   }
+        //   else {
+        //     dayNum++;
+        //     hoursCurrentDay = tempHours;
+        //   }
+        // }
+
+        //console.log("Days:" + dayNum + "\n");
       }
+
 
       // type = this.checkType(type, array[i].Type);
       // scheduled = scheduled + array[i].ScheduledHours;
@@ -324,9 +354,10 @@ export default {
 
       //person++;
       //  }
+
+      //console.log("ID len:" + IDs.length);
       return IDs;
     }
-
   },
   computed: {
     "activePerson": function activePerson() {

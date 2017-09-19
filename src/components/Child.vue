@@ -228,6 +228,10 @@ ul {
   background-color: blue;
 }
 
+.Billed {
+  background-color: lightblue;
+}
+
 table.row-clickable tbody tr td {
     padding: 0;
 }
