@@ -1,6 +1,6 @@
 <template>
   <div class="parent">
-    <child v-bind:message="message2" v-bind:Dates="Dates" v-bind:Daya="Days" v-bind:people="People" v-bind:borrowedPeople="borrowedPeople" v-bind:nonBorrowedPeople="nonBorrowedPeople" v-on:employeeClicked="employeeClick"></child>
+    <child v-bind:message="message2" v-bind:Dates="Dates" v-bind:Days="Days" v-bind:people="People" v-bind:borrowedPeople="borrowedPeople" v-bind:nonBorrowedPeople="nonBorrowedPeople" v-on:employeeClicked="employeeClick"></child>
     <employee v-bind:Tasks=VisiblePeople v-bind:Name=activePerson v-bind:Resources=resources v-on:reassign="reassign"></employee>
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
       ],
       TaskRank: { FREE: 1, OH: 2, SCHEDULED: 3, LENTEXTERNAL: 4, LENTINTERNAL: 5, SUPPORTTRAINING: 6, NONBILLABLE: 7, DTO: 8, HOLIDAY: 9, BILLED: 10 },
       Dates: [],
-      Days:  [],
+      Days: [],
       VisiblePeople: [],
       nonBorrowedPeople: Array,
       borrowedPeople: Array,
@@ -53,28 +53,26 @@ export default {
   },
   created: function() {
     this.calculateStartDate();
-        this.populateCalender();
+    this.populateCalender();
+    this.populateBilled("Zack Hollis");
     this.nonBorrowedPeople = this.getHours("false");
     this.borrowedPeople = this.getHours("true");
     this.resources = this.getResources();
   },
   methods: {
     "populateCalender": function populateCalender() {
-      
+
       var days = moment.duration(this.taskEnd.diff(this.taskStart)).asDays();
       var start = moment(this.taskStart);
 
-      for(var i=0; i<days; i++)
-      {
+      this.Dates.push(start.format('D'));
+      this.Days.push(start.format('dddd').substring(0, 1));
 
-        start.add(i, 'days');
+      for (var i = 0; i < days; i++) {
+        start.add(1, 'days');
         this.Dates.push(start.format('D'));
-        this.Days.push(start.format('dddd').substring(0,1));
-        console.log(start.format('D'));
-        console.log(start.format('dddd').substring(0,1));
-
+        this.Days.push(start.format('dddd').substring(0, 1));
       }
-
     },
     "calculateStartDate": function calculateStartDate() {
 
@@ -198,6 +196,22 @@ export default {
 
       return (hours) - hoursPerDay;
     },
+    "populateBilled": function populateBilled(name) {
+      var hours = new Array;
+
+      var billedTasks = this.Tasks.filter(x => x.Name == name);
+
+      for (var i = 0; i < billedTasks.length; i++) {
+        for (var j = 0; j < billedTasks[i].Billed.length; j++) {
+          var billDate = moment(billedTasks[i].Billed[j].Day);
+          var slot = moment.duration(billDate.diff(this.taskStart)).asDays();
+          hours[slot] += billedTasks[i].Billed[j].Amount;
+
+        }
+      }
+
+      return hours;
+    },
     "getHours": function getHours(borrowed) {
       // var scheduled = 0;
       // var billed = 0;
@@ -230,6 +244,7 @@ export default {
         var hoursInDay = 8;
 
         for (var t = 0; t < peeps.length; t++) {
+          IDs[peeps.Name] = { Name: peeps.Name, Days: this.populateBilled(peeps.Name) };
           //console.log("Current:" + hoursCurrentDay + " Billed:" + peeps[t].BilledHours + " Schduled:" + peeps[t].ScheduledHours)
           hoursLeft = peeps[t].BilledHours;
           while (hoursLeft != 0) {
