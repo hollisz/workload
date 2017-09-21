@@ -19,7 +19,8 @@ export default {
   data() {
     return {
       Tasks: [{ ID: 1, Name: "Jeremy Huddleston", Billed: [{ Day: "8/21/2017", Amount: 4, Type: 7 }, { Day: "7/22/2017", Amount: 4, Type: 9 }] },
-      { ID: 2, Name: "Zack Hollis", Billed: [{ Day: "8/2/2017", Amount: 6, Type: 9 }, { Day: "7/2/2017", Amount: 6, Type: 9 }] }
+      { ID: 2, Name: "Zack Hollis", Billed: [{ Day: "8/2/2017", Amount: 6, Type: 9 }, { Day: "7/2/2017", Amount: 6, Type: 9 }] },
+      { ID: 3, Name: "Albert Huddleston", Billed: [{ Day: "7/2/2017", Amount: 6, Type: 7 }, { Day: "7/2/2017", Amount: 6, Type: 9 }] }
       ],
       People: [
         { ID: 1, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "Approved", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 0, Borrowed: "false" },
@@ -118,7 +119,11 @@ export default {
           var billDate = moment(billedTasks[i].Billed[j].Day);
           var slot = moment.duration(billDate.diff(this.taskStart)).asDays();
           hours[slot].Hours = (hours[slot].Hours + billedTasks[i].Billed[j].Amount);
-          hours[slot].Class = this.TaskRank[billedTasks[i].Billed[j].Type];
+
+          if(this.TaskRank[billedTasks[i].Billed[j].Type] > this.TaskRank.indexOf(hours[slot].Class))
+          {
+            hours[slot].Class = this.TaskRank[billedTasks[i].Billed[j].Type];
+          }
         }
       }
 
@@ -164,10 +169,9 @@ export default {
 
       return this.VisiblePeople;
     },
-    "isBillable" : function isBillable(task)
-    {
-      var billable =  ["supporttraining", "nonbillable", "dto", "holiday", "billed"]; 
-      if(billable.indexOf(task) != -1)
+    "isBillable": function isBillable(task) {
+      var billable = ["supporttraining", "nonbillable", "dto", "holiday", "billed"];
+      if (billable.indexOf(task) != -1)
         return 1;
 
     },
@@ -202,7 +206,7 @@ export default {
             //console.log("in For " + tasks[currentTask].Name + " Scheduled:" + currentHours);
             if ((IDs[p].Days[d].Hours + currentHours) == hoursInDay) {
               IDs[p].Days[d].Hours += currentHours;
-              
+
               if (!this.isBillable(IDs[p].Days[d].Class)) {
                 IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
               }
@@ -227,7 +231,7 @@ export default {
               currentHours = currentHours - (hoursInDay - IDs[p].Days[d].Hours);
               //console.log("curr after:" + currentHours);
               IDs[p].Days[d].Hours += hoursInDay - IDs[p].Days[d].Hours;
-              
+
               if (!this.isBillable(IDs[p].Days[d].Class)) {
                 IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
               }
