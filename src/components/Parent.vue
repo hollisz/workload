@@ -41,6 +41,7 @@ export default {
         { ID: 2, Name: "Albert Huddleston", Borrowed: "true" },
         { ID: 2, Name: "Zack Hollis", Borrowed: "true" }
       ],
+      Billable: ["supporttraining", "nonbillable", "dto", "holiday", "billed"],
       TaskEnum: { FREE: 0, OH: 1, SCHEDULED: 2, LENTEXTERNAL: 3, LENTINTERNAL: 4, SUPPORTTRAINING: 5, NONBILLABLE: 6, DTO: 7, HOLIDAY: 8, BILLED: 9 },
       TaskRank: ["free", "oh", "scheduled", "lentExternal", "lentInternal", "supportTraining", "nonBillable", "dto", "holiday", "billed"],
       Dates: [],
@@ -103,6 +104,60 @@ export default {
         this.Days.push(start.format('dddd').substring(0, 1));
       }
     },
+    "getHours": function getHours(borrowed) {
+      var IDs = new Array;
+      var hoursInDay = 8;
+      var tasks = [];
+
+      var filteredResources = this.Resources.filter(y => y.Borrowed == borrowed);
+
+      for (var p = 0; p < filteredResources.length; p++) {
+        IDs[p] = { Name: filteredResources[p].Name, Days: [] };
+        IDs[p].Days = this.populateBilled(filteredResources[p].Name);
+
+        tasks = this.People.filter(y => y.Name == filteredResources[p].Name).sort((a, b) => a.Type < b.Type ? -1 : a.Type > b.Type);
+
+        var currentDay = 0;
+        var currentTask = 0
+        var currentHours = tasks[currentTask].ScheduledHours;
+
+        for (var d = 0; d < IDs[p].Days.length; d++) {
+          while (IDs[p].Days[d].Hours < hoursInDay && (currentTask < tasks.length)) {
+
+            if ((IDs[p].Days[d].Hours + currentHours) == hoursInDay) {
+              IDs[p].Days[d].Hours += currentHours;
+
+              if (!this.isBillable(IDs[p].Days[d].Class)) {
+                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
+              }
+              currentTask++;
+              currentHours = tasks[currentTask].ScheduledHours;
+            }
+            else if ((IDs[p].Days[d].Hours + currentHours) < hoursInDay) {
+              IDs[p].Days[d].Hours += currentHours;
+
+              if (!this.isBillable(IDs[p].Days[d].Class)) {
+                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
+              }
+              currentTask++;
+              if (currentTask < tasks.length) {
+                currentHours = tasks[currentTask].ScheduledHours;
+              }
+            }
+            else {
+              currentHours = currentHours - (hoursInDay - IDs[p].Days[d].Hours);
+              IDs[p].Days[d].Hours += hoursInDay - IDs[p].Days[d].Hours;
+
+              if (!this.isBillable(IDs[p].Days[d].Class)) {
+                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
+              }
+            }
+          }
+        }
+      }
+
+      return IDs;
+    },
     "populateBilled": function populateBilled(name) {
       var hours = new Array;
       var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
@@ -120,8 +175,7 @@ export default {
           var slot = moment.duration(billDate.diff(this.taskStart)).asDays();
           hours[slot].Hours = (hours[slot].Hours + billedTasks[i].Billed[j].Amount);
 
-          if(this.TaskRank[billedTasks[i].Billed[j].Type] > this.TaskRank.indexOf(hours[slot].Class))
-          {
+          if (billedTasks[i].Billed[j].Type >= this.TaskRank.indexOf(hours[slot].Class)) {
             hours[slot].Class = this.TaskRank[billedTasks[i].Billed[j].Type];
           }
         }
@@ -170,78 +224,9 @@ export default {
       return this.VisiblePeople;
     },
     "isBillable": function isBillable(task) {
-      var billable = ["supporttraining", "nonbillable", "dto", "holiday", "billed"];
-      if (billable.indexOf(task) != -1)
+      if (this.Billable.indexOf(task) != -1)
         return 1;
 
-    },
-    "getHours": function getHours(borrowed) {
-      var i = 0;
-      var len = 0;
-      var IDs = new Array;
-      var hoursInDay = 8;
-
-      var array = this.sortPeople().filter(function(x) { return (x.Borrowed == borrowed) });
-      var name = array[0].Name;
-      len = array.length - 1;
-
-      var filteredResources = this.Resources.filter(y => y.Borrowed == borrowed);
-
-      var tasks = [];
-
-      for (var p = 0; p < filteredResources.length; p++) {
-        IDs[p] = { Name: filteredResources[p].Name, Days: [] };
-        IDs[p].Days = this.populateBilled(filteredResources[p].Name);
-
-        tasks = this.People.filter(y => y.Name == filteredResources[p].Name).sort((a, b) => a.Type < b.Type ? -1 : a.Type > b.Type);
-
-        //hoursLeftInDay = hoursInDay - IDs[p].Days[d].Hours;
-        var currentDay = 0;
-        var currentTask = 0
-        var currentHours = tasks[currentTask].ScheduledHours;
-        //for (var t = 0; t < tasks.length; t++) {
-        for (var d = 0; d < IDs[p].Days.length; d++) {
-          while (IDs[p].Days[d].Hours < hoursInDay && (currentTask < tasks.length)) {
-            //console.log("currentTask:" + currentTask);
-            //console.log("in For " + tasks[currentTask].Name + " Scheduled:" + currentHours);
-            if ((IDs[p].Days[d].Hours + currentHours) == hoursInDay) {
-              IDs[p].Days[d].Hours += currentHours;
-
-              if (!this.isBillable(IDs[p].Days[d].Class)) {
-                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
-              }
-              currentTask++;
-              currentHours = tasks[currentTask].ScheduledHours;
-            }
-            else if ((IDs[p].Days[d].Hours + currentHours) < hoursInDay) {
-              //console.log("<" + "Billed:" + IDs[p].Days[d].Hours + " curr:" + currentHours);
-              IDs[p].Days[d].Hours += currentHours;
-
-              if (!this.isBillable(IDs[p].Days[d].Class)) {
-                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
-              }
-              currentTask++;
-              if (currentTask < tasks.length) {
-                //console.log("in if");
-                currentHours = tasks[currentTask].ScheduledHours;
-              }
-            }
-            else {
-              //console.log(">" + "Billed:" + IDs[p].Days[d].Hours + " curr:" + currentHours);
-              currentHours = currentHours - (hoursInDay - IDs[p].Days[d].Hours);
-              //console.log("curr after:" + currentHours);
-              IDs[p].Days[d].Hours += hoursInDay - IDs[p].Days[d].Hours;
-
-              if (!this.isBillable(IDs[p].Days[d].Class)) {
-                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
-              }
-            }
-          }
-        }
-      }
-
-      //console.log(IDs.length);
-      return IDs;
     },
     "reassign": function reassign(tasks, name) {
       for (var i = 0; i < tasks.length; i++) {
