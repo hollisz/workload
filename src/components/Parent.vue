@@ -18,29 +18,30 @@ export default {
   },
   data() {
     return {
-      Tasks: [{ ID: 1, Name: "Jeremy Huddleston", Billed: [{ Day: "8/21/2017", Amount: 4 }, { Day: "7/22/2017", Amount: 4 }] },
-      { ID: 2, Name: "Zack Hollis", Billed: [{ Day: "8/2/2017", Amount: 6 }, { Day: "7/2/2017", Amount: 6 }] }
+      Tasks: [{ ID: 1, Name: "Jeremy Huddleston", Billed: [{ Day: "8/21/2017", Amount: 4, Type: 7 }, { Day: "7/22/2017", Amount: 4, Type: 9 }] },
+      { ID: 2, Name: "Zack Hollis", Billed: [{ Day: "8/2/2017", Amount: 6, Type: 9 }, { Day: "7/2/2017", Amount: 6, Type: 9 }] }
       ],
       People: [
         { ID: 1, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "Approved", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 0, Borrowed: "false" },
         { ID: 2, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "In Progress", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 0, Borrowed: "false" },
-        // { ID: 3, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 3, BilledHours: 1, Borrowed: "false" },
-        // { ID: 4, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 1, Borrowed: "false" },
-        // { ID: 5, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 5, BilledHours: 1, Borrowed: "false" },
-        // { ID: 6, Name: "Albert Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 6, BilledHours: 1, Borrowed: "true" },
-        // { ID: 7, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 3, BilledHours: 1, Borrowed: "false" },
-        // { ID: 8, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 1, Borrowed: "false" },
-        // { ID: 9, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 5, BilledHours: 1, Borrowed: "false" },
-        // { ID: 10, Name: "Albert Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 6, BilledHours: 1, Borrowed: "true" },
-        // { ID: 11, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 1, BilledHours: 1, Borrowed: "false" },
+        { ID: 3, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 3, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 3, BilledHours: 1, Borrowed: "false" },
+        { ID: 4, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 1, Borrowed: "false" },
+        { ID: 5, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 5, BilledHours: 1, Borrowed: "false" },
+        { ID: 6, Name: "Albert Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 6, BilledHours: 1, Borrowed: "true" },
+        { ID: 7, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 3, BilledHours: 1, Borrowed: "false" },
+        { ID: 8, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "OH", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 1, Borrowed: "false" },
+        { ID: 9, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 5, BilledHours: 1, Borrowed: "false" },
+        { ID: 10, Name: "Albert Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 6, BilledHours: 1, Borrowed: "true" },
+        { ID: 11, Name: "Jeremy Huddleston", FileNumber: "MO-22-IGT-17-17", Task: "SAS", Type: 8, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 1, BilledHours: 1, Borrowed: "false" },
         { ID: 12, Name: "Zack Hollis", FileNumber: "MO-22-IGT-17-18", Task: "SAS", Type: 3, Status: "Pending", EstStartDate: "7/1/2017", EstCompleteDate: "7/1/2017", ScheduledHours: 4, BilledHours: 0, Borrowed: "true" }
       ],
       Resources: [
         { ID: 1, Name: "Jeremy Huddleston", Borrowed: "false" },
-        // { ID: 2, Name: "Albert Huddleston", Borrowed: "true" },
+        { ID: 2, Name: "Albert Huddleston", Borrowed: "true" },
         { ID: 2, Name: "Zack Hollis", Borrowed: "true" }
       ],
-      TaskRank: { FREE: 1, OH: 2, SCHEDULED: 3, LENTEXTERNAL: 4, LENTINTERNAL: 5, SUPPORTTRAINING: 6, NONBILLABLE: 7, DTO: 8, HOLIDAY: 9, BILLED: 10 },
+      TaskEnum: { FREE: 0, OH: 1, SCHEDULED: 2, LENTEXTERNAL: 3, LENTINTERNAL: 4, SUPPORTTRAINING: 5, NONBILLABLE: 6, DTO: 7, HOLIDAY: 8, BILLED: 9 },
+      TaskRank: ["free", "oh", "scheduled", "lentExternal", "lentInternal", "supportTraining", "nonBillable", "dto", "holiday", "billed"],
       Dates: [],
       Days: [],
       VisiblePeople: [],
@@ -52,25 +53,16 @@ export default {
     }
   },
   created: function() {
-    this.calculateStartDate();
-    this.populateCalender();
-    this.nonBorrowedPeople = this.getHours("false");
-    this.borrowedPeople = this.getHours("true");
-    this.resources = this.getResources();
+    this.initializeData();
   },
   methods: {
-    "populateCalender": function populateCalender() {
-      var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
-      var start = moment(this.taskStart);
-
-      this.Dates.push(start.format('D'));
-      this.Days.push(start.format('dddd').substring(0, 1));
-
-      for (var i = 0; i < days; i++) {
-        start.add(1, 'days');
-        this.Dates.push(start.format('D'));
-        this.Days.push(start.format('dddd').substring(0, 1));
-      }
+    "initializeData": function initializeData() {
+      this.calculateStartDate();
+      this.populateCalender();
+      this.nonBorrowedPeople = this.getHours("false");
+      this.borrowedPeople = this.getHours("true");
+      this.resources = this.getResources();
+      this.visiblePeople(this.activePerson);
     },
     "calculateStartDate": function calculateStartDate() {
 
@@ -86,92 +78,51 @@ export default {
 
       var endDate = moment(startDate).add(30, 'days');
 
-      //var endDate = new moment(startDate.add(30, 'days'));
-      //endDate = startDate.add(30, 'days');
-
       for (var t = 0; t < this.Tasks.length; t++) {
         this.Tasks[t].Billed.sort((a, b) => a.Day > b.Day ? -1 : a.Day < b.Day);
-        //console.log("billed:" + this.Tasks[t].Billed[0].Day + "end:" + endDate.format('l'));
-        //var isafter = moment(endDate).isAfter(this.Tasks[t].Billed[0].Day);
         var isbefore = moment(endDate).isBefore(this.Tasks[t].Billed[0].Day);
 
-        //console.log(isafter);
-        console.log(isbefore);
-
-        //if (this.Tasks[t].Billed[0].Day > endDate) {
         if (isbefore) {
           endDate = this.Tasks[t].Billed[0].Day;
-          //console.log("new enddate:" + endDate);
         }
       }
-      //console.log(startDate, endDate.format('l'));
       this.taskStart = startDate;
       this.taskEnd = endDate;
-
     },
-    "reassign": function reassign(tasks, name) {
-      for (var i = 0; i < tasks.length; i++) {
-        for (var j = 0; j < this.People.length; j++) {
-          if (this.People[j].ID == tasks[i]) {
-            //Set the name to the new resource
-            this.People[j].Name = name;
-            //Set the billed hours to 0
-            this.People[j].BilledHours = 0;
-            //Set the status to pending
-            this.People[j].Status = "Pending";
-            //Set borrowed to the resources borrow
-            this.People[j].Borrowed = this.Resources.find(x => x.Name == name).Borrowed;
+    "populateCalender": function populateCalender() {
+      var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
+      var start = moment(this.taskStart);
 
-          }
+      this.Dates.push(start.format('D'));
+      this.Days.push(start.format('dddd').substring(0, 1));
+
+      for (var i = 0; i < days; i++) {
+        start.add(1, 'days');
+        this.Dates.push(start.format('D'));
+        this.Days.push(start.format('dddd').substring(0, 1));
+      }
+    },
+    "populateBilled": function populateBilled(name) {
+      var hours = new Array;
+      var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
+
+      for (var y = 0; y <= days; y++) {
+        //console.log(y);
+        hours.push({ Hours: 0, Class: this.TaskRank[this.TaskEnum.FREE] });
+      }
+
+      var billedTasks = this.Tasks.filter(x => x.Name == name);
+
+      for (var i = 0; i < billedTasks.length; i++) {
+        for (var j = 0; j < billedTasks[i].Billed.length; j++) {
+          var billDate = moment(billedTasks[i].Billed[j].Day);
+          var slot = moment.duration(billDate.diff(this.taskStart)).asDays();
+          hours[slot].Hours = (hours[slot].Hours + billedTasks[i].Billed[j].Amount);
+          hours[slot].Class = this.TaskRank[billedTasks[i].Billed[j].Type];
         }
       }
-      this.visiblePeople(this.activePerson);
-      this.nonBorrowedPeople = this.getHours("false");
-      this.borrowedPeople = this.getHours("true");
-      this.resources = this.getResources();
-    },
-    "employeeClick": function() {
-      var text = $(event.target).text();
-      this.visiblePeople(text);
-    },
-    "visiblePeople": function VisiblePeople(name) {
-      var len = this.People.length;
-      this.VisiblePeople = [];
 
-      for (var i = 0; i < len; ++i) {
-        if (this.People[i].Name == name)
-          this.VisiblePeople.push(this.People[i]);
-      }
-
-      return VisiblePeople;
-    },
-    "rankType": function rankType(val) {
-      if (val == "Billed")
-        return 10;
-      if (val == "Holiday")
-        return 9;
-      if (val == "DTO")
-        return 8;
-      if (val == "Non-Billable")
-        return 7;
-      if (val == "Support/Training")
-        return 6;
-      if (val == "Lent Internal")
-        return 5;
-      if (val == "Lent External")
-        return 4;
-      if (val == "Scheduled")
-        return 3;
-      if (val == "OH")
-        return 2;
-      if (val == "Free")
-        return 1;
-    },
-    "checkType": function checkType(oldVal, newVal) {
-      if (this.rankType(newVal) >= this.rankType(oldVal))
-        return newVal;
-      else
-        return oldVal;
+      return hours;
     },
     "sortPeople": function sortPeople() {
       var arr = this.People;
@@ -197,46 +148,34 @@ export default {
 
       return IDs;
     },
-    "fitInDay": function fitInDay(hours) {
-      var hoursPerDay = 8;
-
-      return (hours) - hoursPerDay;
+    "employeeClick": function() {
+      var text = $(event.target).text();
+      this.visiblePeople(text);
     },
-    "populateBilled": function populateBilled(name) {
-      var hours = new Array;
-      var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
+    "visiblePeople": function visiblePeople(name) {
+      var len = this.People.length;
+      this.VisiblePeople = [];
 
-      for (var y = 0; y <= days; y++) {
-        //console.log(y);
-        hours.push({ Hours: 0, Class: "Free" });
-      }
-
-      var billedTasks = this.Tasks.filter(x => x.Name == name);
-
-      for (var i = 0; i < billedTasks.length; i++) {
-        for (var j = 0; j < billedTasks[i].Billed.length; j++) {
-          var billDate = moment(billedTasks[i].Billed[j].Day);
-          var slot = moment.duration(billDate.diff(this.taskStart)).asDays();
-          //console.log("slot:" + slot + "Billed:" + billDate.format('l'));
-          hours[slot].Hours = (hours[slot].Hours + billedTasks[i].Billed[j].Amount);
-          hours[slot].Class = "Billed";
-          //hours[slot] = { Hours: (hours[slot].Hours+billedTasks[i].Billed[j].Amount), Class: 1 };
-          //hours[slot] += billedTasks[i].Billed[j].Amount;
-
+      for (var i = 0; i < len; ++i) {
+        if (this.People[i].Name == name) {
+          this.VisiblePeople.push(this.People[i]);
         }
       }
 
-      return hours;
+      return this.VisiblePeople;
+    },
+    "isBillable" : function isBillable(task)
+    {
+      var billable =  ["supporttraining", "nonbillable", "dto", "holiday", "billed"]; 
+      if(billable.indexOf(task) != -1)
+        return 1;
+
     },
     "getHours": function getHours(borrowed) {
-      // var scheduled = 0;
-      // var billed = 0;
-      // var hours = 0;
       var i = 0;
       var len = 0;
       var IDs = new Array;
-      // var person = 0;
-      // var type;
+      var hoursInDay = 8;
 
       var array = this.sortPeople().filter(function(x) { return (x.Borrowed == borrowed) });
       var name = array[0].Name;
@@ -244,119 +183,82 @@ export default {
 
       var filteredResources = this.Resources.filter(y => y.Borrowed == borrowed);
 
-      //console.log( filteredResources.length);
-      var peeps = [];
+      var tasks = [];
 
       for (var p = 0; p < filteredResources.length; p++) {
         IDs[p] = { Name: filteredResources[p].Name, Days: [] };
         IDs[p].Days = this.populateBilled(filteredResources[p].Name);
 
-        peeps = this.People.filter(y => y.Name == filteredResources[p].Name).sort((a, b) => a.Type < b.Type ? -1 : a.Type > b.Type);
+        tasks = this.People.filter(y => y.Name == filteredResources[p].Name).sort((a, b) => a.Type < b.Type ? -1 : a.Type > b.Type);
 
-        //console.log("Hours for:" + filteredResources[p].Name + "\n");
-
-        var hoursCurrentDay = 0;
-        var dayNum = 0;
-        var tempHours = -1;
-        var hoursLeft = 0;
-        var hoursLeftInDay = 0;
-        var hoursInDay = 8;
-
-        //console.log("peep len:" + peeps.length);
-
+        //hoursLeftInDay = hoursInDay - IDs[p].Days[d].Hours;
+        var currentDay = 0;
+        var currentTask = 0
+        var currentHours = tasks[currentTask].ScheduledHours;
+        //for (var t = 0; t < tasks.length; t++) {
         for (var d = 0; d < IDs[p].Days.length; d++) {
-          console.log(IDs[p].Days[d].Hours);
+          while (IDs[p].Days[d].Hours < hoursInDay && (currentTask < tasks.length)) {
+            //console.log("currentTask:" + currentTask);
+            //console.log("in For " + tasks[currentTask].Name + " Scheduled:" + currentHours);
+            if ((IDs[p].Days[d].Hours + currentHours) == hoursInDay) {
+              IDs[p].Days[d].Hours += currentHours;
+              
+              if (!this.isBillable(IDs[p].Days[d].Class)) {
+                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
+              }
+              currentTask++;
+              currentHours = tasks[currentTask].ScheduledHours;
+            }
+            else if ((IDs[p].Days[d].Hours + currentHours) < hoursInDay) {
+              //console.log("<" + "Billed:" + IDs[p].Days[d].Hours + " curr:" + currentHours);
+              IDs[p].Days[d].Hours += currentHours;
 
-          if (IDs[p].Days[d].Hours < hoursInDay) {
-            hoursLeftInDay = hoursInDay - IDs[p].Days[d].Hours; 
-            for (var t = 0; t < peeps.length; t++) {
-              console.log(peeps[t].Name + " " + peeps[t].Task + " " + peeps[t].ScheduledHours);
-              hoursLeft = hoursLeftInDay - peeps[t].Scheduled - peeps[t].Billed;
-
-               while (hoursLeft != 0) {
-                 tempHours = hoursInDay - hoursLeft;
-
-                 if (tempHours == 0) {
-                   IDs[p].Days[d].Hours += hoursLeft;
-                   dayNum++;
-                   hoursCurrentDay = 0;
-                   hoursLeft = 0;
-                 }
-                else if (tempHours < 0) {
-                  hoursCurrentDay += tempHours * -1;
-                  hoursLeft = 0;
-                  dayNum++;
-                }
-                else {
-                  dayNum++;
-                  hoursCurrentDay = tempHours;
-                  hoursLeft = tempHours;
-                }
-               }
+              if (!this.isBillable(IDs[p].Days[d].Class)) {
+                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
+              }
+              currentTask++;
+              if (currentTask < tasks.length) {
+                //console.log("in if");
+                currentHours = tasks[currentTask].ScheduledHours;
+              }
+            }
+            else {
+              //console.log(">" + "Billed:" + IDs[p].Days[d].Hours + " curr:" + currentHours);
+              currentHours = currentHours - (hoursInDay - IDs[p].Days[d].Hours);
+              //console.log("curr after:" + currentHours);
+              IDs[p].Days[d].Hours += hoursInDay - IDs[p].Days[d].Hours;
+              
+              if (!this.isBillable(IDs[p].Days[d].Class)) {
+                IDs[p].Days[d].Class = this.TaskRank[this.TaskEnum.SCHEDULED];
+              }
             }
           }
         }
-        //=================================
-
-        // while (tempHours != 0) {
-        //   tempHours = this.fitInDay(peeps[t].ScheduledHours, hoursCurrentDay);
-
-        //   if (tempHours == 0) {
-        //     hoursCurrentDay += peeps[t].ScheduledHours;
-        //   }
-        //   else {
-        //     dayNum++;
-        //     hoursCurrentDay = tempHours;
-        //   }
-        // }
-
-        //console.log("Days:" + dayNum + "\n");
       }
 
-
-      // type = this.checkType(type, array[i].Type);
-      // scheduled = scheduled + array[i].ScheduledHours;
-      // billed = billed + array[i].BilledHours;
-      // hours = billed + scheduled;
-
-
-      //}
-
-      //console.log(array);
-
-      // while (i < len) {
-      //   name = array[i].Name;
-      //   type = array[i].Type;
-      //   IDs[person] = { Name: array[i].Name, Days: [] };
-      //   //  console.log("PreCycle names:" + name);
-      //   //Cycle through each person
-      //   while ((array[i].Name == name) && (i < len)) {
-      //     //console.log("Cycle names:" + name);
-      //     type = this.checkType(type, array[i].Type);
-      //     scheduled = scheduled + array[i].ScheduledHours;
-      //     billed = billed + array[i].BilledHours;
-      //     hours = billed + scheduled;
-
-      //     if (hours >= 8 || !((i + 1) < len) || array[i + 1].Name != name) {
-      //       //console.info(JSON.stringify(IDs, null, '  '))
-      //       //console.log("Tpyeset: " + type)
-      //       IDs[person].Days.push({ Hours: (hours), Class: type });
-      //       hours = 0;
-      //       billed = 0;
-      //       scheduled = 0;
-      //     }
-
-      //     i++;
-      //   }
-
-      //   for (var j = IDs[person].Days.length; j< 29; j++)
-      // IDs[person].Days.push({ Hours: 8, Class: "Free" });
-
-      //person++;
-      //  }
-
-      //console.log("ID len:" + IDs.length);
+      //console.log(IDs.length);
       return IDs;
+    },
+    "reassign": function reassign(tasks, name) {
+      for (var i = 0; i < tasks.length; i++) {
+        for (var j = 0; j < this.People.length; j++) {
+          if (this.People[j].ID == tasks[i]) {
+            //Set the name to the new resource
+            this.People[j].Name = name;
+            //Set the billed hours to 0
+            this.People[j].BilledHours = 0;
+            //Set the status to pending
+            this.People[j].Status = "Pending";
+            //Set borrowed to the resources borrow
+            this.People[j].Borrowed = this.Resources.find(x => x.Name == name).Borrowed;
+
+          }
+        }
+      }
+      this.visiblePeople(this.activePerson);
+      this.nonBorrowedPeople = this.getHours("false");
+      this.borrowedPeople = this.getHours("true");
+      this.resources = this.getResources();
     }
   },
   computed: {
@@ -373,12 +275,6 @@ export default {
       return person;
     }
   },
-  //events: {
-  // menuclick: function (){
-
-  // console.log("Clicked");
-  //}
-  //},
   components: {
     Child,
     Employee

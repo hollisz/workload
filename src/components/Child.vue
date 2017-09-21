@@ -216,19 +216,20 @@ ul {
   color: blue
 }
 
-.DTO {
+.dto {
   background-color: hotpink;
 }
 
-.Free {
+.free {
   background-color: white;
 }
 
-.Scheduled {
+.scheduled {
   background-color: blue;
+  color: white;
 }
 
-.Billed {
+.billed {
   background-color: lightblue;
 }
 
