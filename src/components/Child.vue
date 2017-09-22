@@ -1,8 +1,8 @@
 <template>
   <div class="child">
     <div class="container">
-      <div class="DivToScroll">
-        <div class="DivWithScroll">
+      <div class="panel panel-default">
+        <div class="panel-body">
           <div class="row">
             <div class="text-right">
               <p>
@@ -13,11 +13,12 @@
             </div>
             <div class="col-md-12">
               <div class="table-responsive">
+                <div class="tableContent">
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <td>July 2017</td>
-                      <td v-for="col in Dates" v-bind:item="col">{{ col }}</td>
+                      <td class="free">July 2017</td>
+                      <td class="dates" v-for="col in Dates" v-bind:item="col">{{ col }}</td>
                     </tr>
                     <tr bgcolor="#b3d9ff">
                       <th></th>
@@ -25,70 +26,71 @@
                     </tr>
                     <tr>
                       <th bgcolor="#00FF00">Engineering Resources</th>
-                      <td v-for="col in Days"></td>
+                      <td class="free" v-for="col in Days"></td>
                     </tr>
                   </thead>
-                   <tbody>
-                    <tr v-for="row in nonBorrowedPeople" v-bind:item="row" @click="reFreshPeople">
-                      <td  bgcolor="#6699ff">{{ row.Name }}</td>
-                      <td v-for="day in row.Days" :class="day.Class">
-                        {{ day.Hours }}
-                      </td>
-                    </tr>
-                     <tr>
-                      <th bgcolor="#00FF00">Borrowed Resources</th>
-                      <td v-for="col in Days"></td>
-                    </tr>
-                   <tr v-for="row in borrowedPeople" v-bind:item="row" @click="reFreshPeople">
-                      <td  bgcolor="#6699ff">{{ row.Name }}</td>
-                      <td v-for="day in row.Days" :class="day.Class">
-                        {{ day.Hours }}
-                      </td>
-                    </tr> 
-                  </tbody> 
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="text-center">
-          <br>
-          <button id="save" type="button" class="btn btn-success">Save</button>
-          <button id="cancel" type="button" class="btn btn-danger">Cancel</button>
-        </div>
-        <div class="text-left">
-        <p>
-          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            <span class="glyphicon glyphicon-chevron-down"></span> Legend
-          </a>
-        </p>
-        </div>
-        <div class="collapse" id="collapseExample">
-          <div class="card card-block">
-              <h5>Value: Billed/Scheduled</h5>
-              <div class="table-responsive">
-                <table class="table table-bordered table-striped">
                   <tbody>
-                    <tr>
-                      <td class="Billed">Billed</td>
-                      <td class="Holiday">Holiday</td>
-                      <td class="Dto">DTO</td>
-                      <td class="NonBillable">Non-Billable</td>
-                      <td class="SupportTrain">Support/Training</td>
-                      <td class="LentInternal">Lent Internal</td>
+                    <tr v-for="row in nonBorrowedPeople" v-bind:item="row" @click="reFreshPeople">
+                      <td bgcolor="#6699ff">{{ row.Name }}</td>
+                      <td v-for="day in row.Days" :class="day.Class">
+                        {{ day.Hours }}/0
+                      </td>
                     </tr>
                     <tr>
-                      <td class="LentExternal">Lent External</td>
-                      <td class="Scheduled">Scheduled</td>
-                      <td class="Oh">OH</td>
-                      <td class="Weekend">Weekend</td>
-                      <td>Free</td>
-
+                      <th bgcolor="#00FF00">Borrowed Resources</th>
+                      <td class="free" v-for="col in Days"></td>
+                    </tr>
+                    <tr v-for="row in borrowedPeople" v-bind:item="row" @click="reFreshPeople">
+                      <td bgcolor="#6699ff">{{ row.Name }}</td>
+                      <td v-for="day in row.Days" :class="day.Class">
+                        {{ day.Hours }}/0
+                      </td>
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </div>
+            </div>
+            <div class="text-center">
+              <br>
+              <button id="save" type="button" class="btn btn-success">Save</button>
+              <button id="cancel" type="button" class="btn btn-danger">Cancel</button>
+            </div>
+            <div class="text-left">
+              <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  <span class="glyphicon glyphicon-chevron-down"></span> Legend
+                </a>
+              </p>
+            </div>
+            <div class="collapse" id="collapseExample">
+              <div class="card card-block">
+                <h5>Value: Billed/Scheduled</h5>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <tbody>
+                      <tr>
+                        <td class="Billed">Billed</td>
+                        <td class="Holiday">Holiday</td>
+                        <td class="Dto">DTO</td>
+                        <td class="NonBillable">Non-Billable</td>
+                        <td class="SupportTrain">Support/Training</td>
+                        <td class="LentInternal">Lent Internal</td>
+                      </tr>
+                      <tr>
+                        <td class="LentExternal">Lent External</td>
+                        <td class="Scheduled">Scheduled</td>
+                        <td class="Oh">OH</td>
+                        <td class="Weekend">Weekend</td>
+                        <td>Free</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -105,8 +107,8 @@ export default {
     people: Array,
     borrowedPeople: Array,
     nonBorrowedPeople: Array,
-    Dates:Array,
-    Days:Array
+    Dates: Array,
+    Days: Array
 
   },
   data() {
@@ -122,34 +124,33 @@ export default {
 
   },
   methods: {
-    "rankType": function rankType(val)
-    {
-      if(val == "Billed")
+    "rankType": function rankType(val) {
+      if (val == "Billed")
         return 10;
-      if(val == "Holiday")
+      if (val == "Holiday")
         return 9;
-      if(val == "DTO")
+      if (val == "DTO")
         return 8;
-      if(val == "Non-Billable")
+      if (val == "Non-Billable")
         return 7;
-      if(val == "Support/Training")
+      if (val == "Support/Training")
         return 6;
-      if(val == "Lent Internal")
+      if (val == "Lent Internal")
         return 5;
-      if(val == "Lent External")
+      if (val == "Lent External")
         return 4;
-      if(val == "Scheduled")
+      if (val == "Scheduled")
         return 3;
-      if(val == "OH")
+      if (val == "OH")
         return 2;
-      if(val == "Free")
+      if (val == "Free")
         return 1;
     },
     "checkType": function checkType(oldVal, newVal) {
-        if(this.rankType(newVal) >= this.rankType(oldVal))        
-          return newVal;
+      if (this.rankType(newVal) >= this.rankType(oldVal))
+        return newVal;
       else
-          return oldVal;
+        return oldVal;
     },
     "sumscheduled": function sumscheduled() {
       var sum = 0;
@@ -175,9 +176,9 @@ export default {
 
       return arr;
     },
-        "reFreshPeople": function reFreshPeople(event) {
-        var text = $(event.target).text();
-        this.$emit('employeeClicked', text);
+    "reFreshPeople": function reFreshPeople(event) {
+      var text = $(event.target).text();
+      this.$emit('employeeClicked', text);
     }
   },
   computed: {
@@ -186,7 +187,7 @@ export default {
         return [];
       }
       return Object.keys(this.people[0])
-     }
+    }
   },
   components: {
   }
@@ -198,8 +199,17 @@ export default {
 <style scoped>
 @import 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css';
 
+.b {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+}
+
 .dates {
   color: #cce6ff
+}
+
+.panel {
+  background-color: lightgray;
 }
 
 h1,
@@ -212,8 +222,9 @@ ul {
   padding: 0;
 }
 
-.blue {
-  color: blue
+.dates {
+  color: white;
+  background-color: gray;
 }
 
 .dto {
@@ -234,11 +245,59 @@ ul {
 }
 
 table.row-clickable tbody tr td {
-    padding: 0;
+  padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn {
+  font-size: 100%;
+  white-space: nowrap;
+    color: #3B3C3E;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
 }
 
 table.row-clickable tbody tr td a {
+  display: block;
+  padding: 8px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  white-space: nowrap;
+    color: #3B3C3E;
+  font-size: 8px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.tableContent {
     display: block;
-    padding: 8px;
+  padding: 8px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  white-space: nowrap;
+    color: #3B3C3E;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.DivToScroll {
+  background-color: #F5F5F5;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px 0 4px 0;
+  color: #3B3C3E;
+  font-size: 10px;
+  font-weight: bold;
+  left: -1px;
+  padding: 10px 7px 5px;
+}
+
+.DivWithScroll {
+  height: 450px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 </style>

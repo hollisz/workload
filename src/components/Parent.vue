@@ -160,10 +160,14 @@ export default {
     },
     "populateBilled": function populateBilled(name) {
       var hours = new Array;
+      var hoursNew = new Array;
       var days = moment.duration(moment(this.taskEnd).diff(this.taskStart)).asDays();
 
       for (var y = 0; y <= days; y++) {
-        //console.log(y);
+        hoursNew.push({ Date: moment(this.taskStart).add(y, 'days').format('l'), BilledHours: 0, ScheduledHours: 0, Class: this.TaskRank[this.TaskEnum.FREE] });
+      }
+      
+      for (var y = 0; y <= days; y++) {
         hours.push({ Hours: 0, Class: this.TaskRank[this.TaskEnum.FREE] });
       }
 
