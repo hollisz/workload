@@ -1,37 +1,28 @@
 <template>
-  <div class="employee">
+  <div class="Sidebar">
     <div class="container">
       <div v-if="Header=='1'">
-        <div class="container">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col-md-3">
-                  <h5>{{Name}}</h5>
-                </div>
-                <div class="col-md-5">
-                  <h5>Total Hours: {{totalHours}} Minus OH: {{minusOH}}</h5>
-                </div>
-                <div class="col-md-4">
-                  <div class="text-right">
-                    <label><input id="checkBox" type="checkbox" @click="hideOH">Hide OH</label>
-                  </div>
-                </div>
-              </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-3">
+              <h5>{{Name}}</h5>
+            </div>
+            <div class="col-md-5">
+              <h5>Total Hours: {{totalHours}} Minus OH: {{minusOH}}</h5>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class=container>
-      <div class="col-md-12">
+    </div>
         <CtxMenu v-bind:NonBorrowed=nonBorrowedResources v-bind:Borrowed=borrowedResources v-on:menuclick="gotEvent">
           <div class="table-responsive tableContent">
             <table class="table table-bordered table-fit">
               <thead>
                 <tr bgcolor="#bgbgbg">
                   <th></th>
-                  <th v-for="col in columns" v-bind:item="col">{{col}} <span v-if="col=='EstStartDate'" class="glyphicon glyphicon-ok"></span></th>
+                  <th v-for="col in columns" v-bind:item="col">{{col}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -42,24 +33,24 @@
               </tbody>
             </table>
             <div v-if="ReAssign=='1'">
-              <div class="text-center">
-                <button id="reassign" type="button" class="btn btn-primary" @click="showModal">Re-Assign</button>
-              </div>
+            <div class="text-center">
+              <button id="reassign" type="button" class="btn btn-primary" @click="showModal">Re-Assign</button>
+            </div>
             </div>
             <div id="myModal" class="modal">
               <!-- Modal content -->
               <div class="modal-content">
                 <div class="modal-header">
                   <span class="close">&times;</span>
-                  <h2>Modal Header1</h2>
+                  <h2>Modal Header</h2>
                 </div>
                 <div class="modal-body">
                   <p>Some text in the Modal Body</p>
-                  <p>Some other text2...</p>
+                  <p>Some other text...</p>
                   <button id="reassign" type="button" class="btn btn-primary" @click="hideModal">Close</button>
                 </div>
                 <div class="modal-footer">
-                  <h3>Modal Footer1</h3>
+                  <h3>Modal Footer</h3>
                 </div>
               </div>
 
@@ -68,9 +59,6 @@
         </CtxMenu>
       </div>
     </div>
-  </div>
-  </div>
-  </div>
   </div>
 </template>
 
@@ -109,25 +97,18 @@ export default {
       var boo2 = "false";
       //var filteredResources = this.Resources.filter(y => y.Borrowed == boo);
       var borrowed = this.Resources.filter(y => y.Borrowed == boo);
-      console.log("test")
-      console.log("Borrowed:" + borrowed.length + " b:" + this.Resources[0].Borrowed + " c:" + this.Resources[0].Name)
 
       for(var i=0; i<borrowed.length; i++)
       {
         this.borrowedResources.push(borrowed[i].Name);
       }
 
-      console.log("set borrowed:" + this.borrowedResources.length)
       var nonBorrowed =  this.Resources.filter(x => x.Borrowed == boo2);
       
-      console.log("set borrowed:" + this.nonBorrowedResources.length)
-
       for(var i=0; i<nonBorrowed.length; i++)
       {
         this.nonBorrowedResources.push(nonBorrowed[i].Name);
       }
-
-      
     },
     "check": function check(row) {
       return row["ID"]
@@ -137,11 +118,6 @@ export default {
  
       this.$emit('reassign', this.checkedTasks, stuff);
 
-    },
-    "hideOH": function hideOH(stuff)
-    {
-      //console.log("hid:" + $(stuff.target).is(':checked'));
-      this.$emit('hideOH', stuff);
     },
     "hideStuff": function hideStuff() {
         
@@ -365,7 +341,7 @@ export default {
   .green {
     background-color: green;
   }
-  
+
   .modal-header {
     padding: 2px 16px;
     background-color: blue;

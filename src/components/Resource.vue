@@ -1,9 +1,9 @@
 <template>
   <div class="resource">
     <div id="container">
-              <div class="panel panel-default">
-          <div class="panel-body">
-      <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="col-md-12">
             <div class="relativeContainer">
               <!-- Fixed Column for both scroller -->
               <div class="leftContainer">
@@ -34,27 +34,31 @@
                 <div class="topSBWrapper">
                   <table class="gridfixed table-responsive" width="1020px" align="left">
                     <tr>
-                      <td class="dates tdfixed" v-for="col in Dates" v-bind:item="col">{{ col }}</td>
+                      <td class="dates tdfixed" v-for="col in Dates" v-bind:item="col" >{{ col }}</td>
                     </tr>
                     <tr>
-                      <td class="tdfixed" bgcolor="#b3d9ff" v-for="col in Days" v-bind:item="col">{{ col }}</td>
+                      <td class="tdfixed" bgcolor="#b3d9ff" v-for="col in Days" v-bind:item="col" >{{ col }}</td>
                     </tr>
                   </table>
                 </div>
                 <div class="SBWrapper">
                   <table class="table-responsive gridfixed" width="1020px">
                     <tr v-for="row in nonBorrowedPeople" v-bind:item="row" @click="reFreshPeople">
-                      <td class="tdfixed" v-for="day in row.Days" :class="day.Class">
-                        <div v-if="day.Class=='Billable'">{{ day.BilledHours }}</div>
-                        <div v-if="day.Class=='scheduled' && day.ScheduledHours != 8">{{day.ScheduledHours}}</div>
+                      <td class="tdfixed" v-for="day in row.Days" :class="day.Class" @click="getUnassigned">
+                        <div v-if="day.Class=='Billable'" @click="getUnassigned">{{ day.BilledHours }}</div>
+                        <div v-if="day.Class=='scheduled' && day.ScheduledHours != 8" @click="getUnassigned">{{day.ScheduledHours}}</div>
+                        <div v-if="day.Class=='free'"></div>
                       </td>
                     </tr>
                     <tr>
                       <td class="free tdfixed" v-for="col in Days"></td>
                     </tr>
                     <tr v-for="row in borrowedPeople" v-bind:item="row" @click="reFreshPeople">
-                      <td class="tdfixed" v-for="day in row.Days" :class="day.Class">
-                        {{ day.BilledHours }}/{{ day.ScheduledHours }}
+                      <td class="tdfixed" v-for="day in row.Days" :class="day.Class" @click="getUnassigned">
+                        <div v-if="day.Class=='Billable'">{{ day.BilledHours }}</div>
+                        <div v-if="day.Class=='scheduled' && day.ScheduledHours != 8" @click="getUnassigned">{{day.ScheduledHours}}</div>
+                        <div v-if="day.Class=='free'"></div>
+                        <!--{{ day.BilledHours }}/{{ day.ScheduledHours }}-->
                       </td>
                     </tr>
                   </table>
@@ -63,44 +67,51 @@
             </div>
 
             <div class="container">
-              <br>
-              <div class="well">
-                <div class="text-center">
-                  <button id="save" type="button" class="btn heading">Save</button>
-                  <button id="cancel" type="button" class="btn weekend">Cancel</button>
+              <div class="col-md-6">
+                <div class="text-left">
+                  <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      <span class="glyphicon glyphicon-chevron-down"></span> Legend
+                    </a>
+                  </p>
+                </div>
+                <div class="collapse" id="collapseExample">
+                  <div class="card card-block">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped">
+                        <tbody>
+                          <tr>
+                            <td class="billed">Billed</td>
+                            <td class="scheduled">Scheduled</td>
+                            <td class="oh">OH</td>
+                            <td class="weekend">Weekend</td>
+                            <td class="free">Free</td>
+                            <td class="lentinternal">Lent</td>
+                            <td class="dto">DTO/Holiday</td>
+                            <!--<td class="holiday">Holiday</td>
+                            <td class="dto">DTO</td>
+                            <td class="nonbillable">Non-Billable</td>
+                            <td class="supporttrain">Support/Training</td>
+                            <td class="lentinternal">Lent Internal</td>-->
+                          </tr>
+                          <!--<tr>
+                            <td class="lentexternal">Lent External</td>
+                            <td class="scheduled">Scheduled</td>
+                            <td class="oh">OH</td>
+                            <td class="weekend">Weekend</td>
+                            <td class="free">Free</td>
+
+                          </tr>-->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="text-left">
-              <p>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                  <span class="glyphicon glyphicon-chevron-down"></span> Legend
-                </a>
-              </p>
-            </div>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-block">
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped">
-                    <tbody>
-                      <tr>
-                        <td class="billed">Billed</td>
-                        <td class="holiday">Holiday</td>
-                        <td class="dto">DTO</td>
-                        <td class="nonbillable">Non-Billable</td>
-                        <td class="supporttrain">Support/Training</td>
-                        <td class="lentinternal">Lent Internal</td>
-                      </tr>
-                      <tr>
-                        <td class="lentexternal">Lent External</td>
-                        <td class="scheduled">Scheduled</td>
-                        <td class="oh">OH</td>
-                        <td class="weekend">Weekend</td>
-                        <td class="free">Free</td>
-
-                      </tr>
-                    </tbody>
-                  </table>
+              <div class="col-md-6">
+                <div class="text-left">
+                  <button id="save" type="button" class="btn heading">Save</button>
+                  <button id="cancel" type="button" class="btn weekend">Cancel</button>
                 </div>
               </div>
             </div>
@@ -108,7 +119,7 @@
         </div>
       </div>
     </div>
-
+      
   </div>
 
 </template>
@@ -145,9 +156,6 @@ export default {
         blueActive: true
       }
     }
-  },
-  filters: {
-
   },
   methods: {
     "scroll": function (){
@@ -216,6 +224,13 @@ export default {
     "reFreshPeople": function reFreshPeople(event) {
       var text = $(event.target).text();
       this.$emit('employeeClicked', text);
+    },
+    "getUnassigned": function getUnassigned(event) {
+      var text = $(event.target).hasClass('free');
+
+      if(text){
+      this.$emit('unscheduledTasks', text);
+      }
     }
   },
   computed: {
@@ -240,6 +255,7 @@ export default {
   }
   },
   components: {
+    
   }
 }
 
@@ -258,7 +274,7 @@ export default {
   }
   
   .panel {
-    background-color: #7d91a3;
+    background-color: lightgray;
   }
   
   h1,
@@ -294,11 +310,15 @@ export default {
   }
   
   .billed {
-    background-color: lightblue;
+    background-color: lightgrey;
   }
   
+.Billable {
+    background-color: lightgrey;
+  }
+
   .scheduled {
-    background-color: blue;
+    background-color: #7CCD7C;
     color: white;
   }
   
@@ -323,7 +343,7 @@ export default {
   }
   
   .oh {
-    background-color: yellow;
+    background-color: #ffff99;
   }
   
   .weekend {
@@ -337,7 +357,7 @@ export default {
     font-size: 100%;
     white-space: nowrap;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     text-align: left;
   }
@@ -395,7 +415,7 @@ export default {
   #container {
     margin: 0px;
     overflow: hidden;
-    border: 0px solid pink;
+    border: 1px solid pink;
   }
   
   table {
@@ -416,8 +436,9 @@ export default {
   th {
     vertical-align: top;
     border: 1px solid #ccc;
-    padding: 5px;
-    height: 40px;
+    padding: 0px;
+    height: 25px;
+    text-align: center;
   }
   
   .gridfixed {
@@ -441,7 +462,7 @@ export default {
     position: absolute;
     left: 0px;
     top: 0px;
-    height: 650px;
+    height: 625px;
     width: auto;
     overflow: hidden;
     border: 0px solid blue;
@@ -449,10 +470,10 @@ export default {
   
   .rightContainer {
     position: absolute;
-    left: 130px;
+    left: 120px;
     top: 0px;
     width: auto;
-    height: 666px;
+    height: 650px;
     overflow: hidden;
     border: 0px solid green;
   }
@@ -475,7 +496,7 @@ export default {
   
   .SBWrapper {
     position: relative;
-    width: 1000px;
+    width: 1700px;
     height: 580px;
     overflow: auto;
   }
