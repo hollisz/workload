@@ -88,20 +88,7 @@
                             <td class="free">Free</td>
                             <td class="lentinternal">Lent</td>
                             <td class="dto">DTO/Holiday</td>
-                            <!--<td class="holiday">Holiday</td>
-                            <td class="dto">DTO</td>
-                            <td class="nonbillable">Non-Billable</td>
-                            <td class="supporttrain">Support/Training</td>
-                            <td class="lentinternal">Lent Internal</td>-->
                           </tr>
-                          <!--<tr>
-                            <td class="lentexternal">Lent External</td>
-                            <td class="scheduled">Scheduled</td>
-                            <td class="oh">OH</td>
-                            <td class="weekend">Weekend</td>
-                            <td class="free">Free</td>
-
-                          </tr>-->
                         </tbody>
                       </table>
                     </div>
@@ -250,8 +237,6 @@ export default {
       }
       
       return visibleHours;
-      // <td class="tdfixed" v-for="day in row.Days" :class="day.Class">
-      // return day.BilledHours;
   }
   },
   components: {
@@ -361,56 +346,6 @@ export default {
     font-weight: bold;
     text-align: left;
   }
-  /*table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border-top: 1px solid grey;
-    display: block;
-    padding: 8px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 100%;
-    white-space: nowrap;
-    color: #142a75;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: left;
-    white-space: nowrap;
-  }
-  
-  td,
-  th {
-    vertical-align: top;
-    border-top: 1px solid #ccc;
-    padding: 10px;
-    width: 100px;
-  }
-  
-  .tablescroll {
-    width: 800px;
-    height: 500px;
-    overflow-y: scroll;
-    margin-left: 5em;
-    overflow-x: scroll;
-    padding: 0;
-  }
-  
-  .tableContent {}
-  
-  .fix {
-    position: absolute;
-    top: auto;
-  }
-  
-  .outer {
-    position: relative;
-  }
-  
-  .inner {
-    overflow-x: scroll;
-    overflow-y: scroll;
-    width: auto;
-    margin-left: 100px;
-  }*/
   
   #container {
     margin: 0px;
