@@ -4,7 +4,7 @@
     <h5>{{taskStart}}</h5>
     <h5>{{taskEnd}}</h5>
     </div>
-    <div class=container>
+    <!--<div class=container>-->
       <!--<div class="col-md-4">-->
       <!--<employee v-bind:Tasks=VisiblePeople v-bind:Header="'0'" v-bind:ReAssign="'0'" v-bind:hideColumns=hideColumns v-bind:Name=activePerson v-bind:Resources=Resources v-on:reassign="reassign"></employee>-->
       <!--</div>-->
@@ -16,7 +16,7 @@
       <!--<div class="container">-->
       <employee v-bind:Tasks=VisiblePeople v-bind:Header="'1'" v-bind:ReAssign="'1'" v-bind:hideColumns=hideColumns v-bind:Name=activePerson
         v-bind:Resources=Resources v-on:reassign="reassign" v-on:hideOH="hideOH"></employee>
-    </div>
+    <!--</div>-->
 
     <div class=container>
       <div class="col-md-2">
@@ -32,9 +32,6 @@
               <employee v-bind:Tasks=UnassignedTasks v-bind:Header="'1'" v-bind:ReAssign="'0'" v-bind:hideColumns=hideColumns v-bind:Name=activePerson
                 v-bind:Resources=Resources v-on:reassign="reassign" v-on:hideOH="hideOH"></employee>
               <button id="reassign" type="button" class="btn btn-primary" @click="hideModal">Close</button>
-            </div>
-            <div class="modal-footer">
-              <h3>Modal Footer2</h3>
             </div>
           </div>
         </div>
@@ -89,6 +86,27 @@ export default {
     // "failure": function failure() {
     //     return false;
     // },
+    "getManagers": function getManagers() {
+      var ret;
+
+      var url = "http://localhost:63298/Protrack/WorkloadManager/GetManagers";
+ 
+      $.ajax({
+        url: url, 
+        context: document.body,
+        timeout: 30000,
+        cache: false,
+        async: false,
+        error: function() {
+          return false;
+        },
+        success: function(data) {
+          ret = data;
+        }
+      });
+
+      return ret;
+    },
     "getData": function getData(manager, startDate) {
       var ret;
 
@@ -131,27 +149,36 @@ export default {
       return ret;
     },
     "initializeData": function initializeData() {
-      console.log("Getting people")
-      this.People = this.getTasks(36);
-      console.log("Start date")
-      this.calculateStartDate();
-      console.log("Get tasks:" + moment(this.taskStart).format('l'))  
-      this.Tasks = this.getData(36, moment(this.taskStart).format('l'));
-      console.log("calcenddate")
-      this.calculateEndDate();
-      console.log("Resource")
-      this.populateResources();
-      console.log("cal")
-      this.populateCalender();
-      console.log("Gethours 1")
-      this.nonBorrowedPeople = this.getHours("false");//.filter(x => x.Name == "Luis Mota");
-      console.log("Get hours2")
-      this.borrowedPeople = this.getHours("true");
-      console.log("resource2")
-      this.resources = this.getResources();
-      console.log("people")
-      this.visiblePeople(this.activePerson);
-      console.log("Done")
+      console.log("Getting managers")
+      var managers = this.getManagers(); 
+      console.log("Man len:" + managers.length);
+
+      for(var k=0; k<managers.length; k++)
+      {
+        console.log(managers[k]);
+      }
+
+      // console.log("Getting people")
+      // this.People = this.getTasks(36);
+      // console.log("Start date")
+      // this.calculateStartDate();
+      // console.log("Get tasks:" + moment(this.taskStart).format('l'))  
+      // this.Tasks = this.getData(36, moment(this.taskStart).format('l'));
+      // console.log("calcenddate")
+      // this.calculateEndDate();
+      // console.log("Resource")
+      // this.populateResources();
+      // console.log("cal")
+      // this.populateCalender();
+      // console.log("Gethours 1")
+      // this.nonBorrowedPeople = this.getHours("false");//.filter(x => x.Name == "Luis Mota");
+      // console.log("Get hours2")
+      // this.borrowedPeople = this.getHours("true");
+      // console.log("resource2")
+      // this.resources = this.getResources();
+      // console.log("people")
+      // this.visiblePeople(this.activePerson);
+      // console.log("Done")
     },
     "dateSort": function dateSort(date1, date2) {
       return moment(date1).isBefore(moment(date2).format('l'),'day');
